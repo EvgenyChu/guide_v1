@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">guide_v1</string>
+    <string name="chapter_1">Раздел 1</string>
+    <string name="chapter_2">Раздел 2</string>
+    <string name="chapter_3">Раздел 3</string>
+    <string name="chapter_4">Раздел 4</string>
+    <string name="chapter_5">Раздел 5</string>
+    <string name="chapter_6">Раздел 6</string>
+    <string name="chapter_7">Раздел 7</string>
+</resources>
