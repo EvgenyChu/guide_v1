@@ -9,13 +9,13 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.template.ui.DrawerScreen
-import com.template.ui.StartScreen
-import com.template.ui.ToolBar
+import androidx.navigation.navArgument
+import com.template.ui.*
 import com.template.ui.theme.Guide_v1Theme
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
@@ -60,6 +60,14 @@ class MainActivity : ComponentActivity() {
                 ) {
                     NavHost(navController = navController, startDestination = "StartScreen") {
                         composable("StartScreen") { StartScreen(navController = navController) }
+                        composable(
+                            "ChapterScreen/{title}",
+                            arguments = listOf(navArgument("title") { type = NavType.IntType })
+                        ) { ChapterScreen(navController = navController, title = it.arguments?.getInt("title")) }
+                        composable(
+                            "ItemScreen/{title}",
+                            arguments = listOf(navArgument("title") { type = NavType.IntType })
+                        ) { ItemScreen(navController = navController, title = it.arguments?.getInt("title")) }
                     }
                 }
             }
@@ -76,5 +84,7 @@ private fun ToolBarHost(navController: NavController, onMenuClick: () -> Unit) {
     val currentRoute = navBackStackEntry?.destination?.route
     when (currentRoute) {
         "StartScreen" -> ToolBar(onMenuClick = onMenuClick)
+        "ChapterScreen/{title}" -> ToolBar(onMenuClick = onMenuClick)
+        "ItemScreen/{title}" -> ToolBar(onMenuClick = onMenuClick)
     }
 }

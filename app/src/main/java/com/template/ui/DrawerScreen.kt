@@ -12,8 +12,10 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -22,15 +24,9 @@ import com.template.R
 
 @Composable
 fun DrawerScreen(navController: NavController, onClick: () -> Unit) {
-    val listChapter = listOf(
-        R.drawable.image_1 to stringResource(id = R.string.chapter_1),
-        R.drawable.image_2 to stringResource(id = R.string.chapter_2),
-        R.drawable.image_3 to stringResource(id = R.string.chapter_3),
-        R.drawable.image_4 to stringResource(id = R.string.chapter_4),
-        R.drawable.image_5 to stringResource(id = R.string.chapter_5),
-        R.drawable.image_6 to stringResource(id = R.string.chapter_6),
-        R.drawable.image_7 to stringResource(id = R.string.chapter_7),
-    )
+
+    val chapter = Chapters.values().toList()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -53,22 +49,59 @@ fun DrawerScreen(navController: NavController, onClick: () -> Unit) {
                 color = MaterialTheme.colors.onSecondary
             )
         }
-        listChapter.forEach {
+        Row(
+            modifier = Modifier
+                .padding(top = 24.dp, start = 16.dp, bottom = 16.dp, end = 16.dp)
+                .clickable { navController.navigate("StartScreen") }
+        ) {
+            Icon(
+                Icons.Filled.List,
+                tint = Color.White,
+                contentDescription = "Назад"
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            Text(
+                text = "Список разделов",
+                style = MaterialTheme.typography.h4,
+                color = Color.White
+            )
+        }
+
+        chapter.forEach {
             Row(
                 modifier = Modifier
-                    .clickable { }
+                    .fillMaxWidth()
+                    .clickable {
+                        navController.navigate("ChapterScreen/${it.title}")
+                    }
                     .padding(top = 24.dp, start = 16.dp, bottom = 16.dp, end = 16.dp)
             ) {
-                Text(text = it.second)
+                Icon(
+                    Icons.Filled.List,
+                    tint = Color.White,
+                    contentDescription = "Назад"
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                Text(
+                    text = stringResource(id = it.title),
+                    style = MaterialTheme.typography.h4,
+                    color = Color.White
+                )
             }
         }
         Row(
             modifier = Modifier
-                .padding(top = 24.dp, start = 16.dp, bottom = 16.dp, end = 16.dp)
+                .fillMaxWidth()
                 .clickable { onClick() }
+                .padding(top = 24.dp, start = 16.dp, bottom = 16.dp, end = 16.dp)
         ) {
-            Text(text = "Выйти")
+            Text(
+                text = "Выйти",
+                style = MaterialTheme.typography.h4,
+                color = Color.White
+            )
         }
+        Spacer(Modifier.height(16.dp))
     }
 }
 
